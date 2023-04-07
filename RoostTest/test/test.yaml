@@ -1,0 +1,35 @@
+javascript
+const { artillery } = require('artillery-core');
+
+module.exports = {
+  config: {
+    target: 'ROOST_SVC_URL',
+    phases: [
+      {
+        duration: 10,
+        arrivalRate: 1
+      }
+    ],
+    defaults: {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  },
+  scenarios: {
+    getTest: {
+      executor: 'per-vu-iterations',
+      vus: 1,
+      iterations: 1,
+      scenario: {
+        getCall: {
+          method: 'GET',
+          url: '/',
+          expect: {
+            statusCode: 201
+          }
+        }
+      }
+    }
+  }
+};
